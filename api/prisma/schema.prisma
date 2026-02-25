@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  STAFF
+  ADMIN
+}
+
+enum Department {
+  REGISTRATION
+  IT
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+}
+
+enum NotificationType {
+  TICKET_CREATED
+  TICKET_UPDATED
+  SYSTEM
+}
+
+enum KnowledgeSourceType {
+  FAQ
+  DOCUMENT
+}
+
+model User {
+  id              String             @id @default(cuid())
+  schoolId        String             @unique
+  email           String?            @unique
+  passwordHash    String
+  role            Role               @default(STUDENT)
+  department      Department?
+  active          Boolean            @default(true)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  profile         Profile?
+  studentTickets  Ticket[]           @relation("StudentTickets")
+  assignedTickets Ticket[]           @relation("AssignedTickets")
+  ticketEvents    TicketEvent[]
+  attachments     Attachment[]
+  notifications   Notification[]
+  traces          OrchestratorTrace[]
+  documents       KnowledgeDocument[] @relation("UploadedDocuments")
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  fullName  String
+  avatarUrl String?
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  studentId   String
+  student     User         @relation("StudentTickets", fields: [studentId], references: [id], onDelete: Restrict)
+  department  Department
+  subject     String
+  description String
+  status      TicketStatus @default(OPEN)
+  assigneeId  String?
+  assignee    User?        @relation("AssignedTickets", fields: [assigneeId], references: [id], onDelete: SetNull)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  events      TicketEvent[]
+  attachments Attachment[]
+
+  @@index([department, status])
+  @@index([studentId, createdAt])
+}
+
+model TicketEvent {
+  id        String   @id @default(cuid())
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  actorId   String
+  actor     User     @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  eventType String
+  payload   Json?
+  createdAt DateTime @default(now())
+
+  @@index([ticketId, createdAt])
+}
+
+model Attachment {
+  id          String   @id @default(cuid())
+  ticketId    String
+  ticket      Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  uploaderId  String
+  uploader    User     @relation(fields: [uploaderId], references: [id], onDelete: Restrict)
+  fileName    String
+  mimeType    String
+  sizeBytes   Int
+  storagePath String
+  createdAt   DateTime @default(now())
+
+  @@index([ticketId, createdAt])
+}
+
+model KnowledgeDocument {
+  id         String              @id @default(cuid())
+  title      String
+  department Department
+  sourceType KnowledgeSourceType @default(DOCUMENT)
+  content    String
+  status     String              @default("ACTIVE")
+  uploadedBy String
+  uploader   User                @relation("UploadedDocuments", fields: [uploadedBy], references: [id], onDelete: Restrict)
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+  chunks     KnowledgeChunk[]
+
+  @@index([department, createdAt])
+}
+
+model KnowledgeChunk {
+  id         String   @id @default(cuid())
+  documentId String
+  document   KnowledgeDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  chunkText  String
+  embedding  Float[]
+  chunkIndex Int
+  createdAt  DateTime @default(now())
+
+  @@index([documentId, chunkIndex])
+}
+
+model FaqEntry {
+  id         String     @id @default(cuid())
+  department Department
+  question   String
+  answer     String
+  tags       String[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@index([department, createdAt])
+}
+
+model OrchestratorTrace {
+  id           String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  intent        String
+  confidence    Float?
+  routedAgents  Json
+  outcome       Json
+  createdAt     DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model ApiKey {
+  id              String   @id @default(cuid())
+  label           String
+  hashedKey       String   @unique
+  scopes          String[]
+  rateLimitPolicy Json?
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  title     String
+  message   String
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  @@index([userId, read, createdAt])
+}
