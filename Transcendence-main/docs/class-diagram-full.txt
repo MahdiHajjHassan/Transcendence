@@ -1,0 +1,277 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+left to right direction
+title College Support Portal - Full Class Diagram
+
+/'
+VISUAL RELATIONSHIP MAP
+
+Student --|> User
+Staff --|> User
+Admin --|> User
+
+User "1" *-- "0..1" Profile : has
+Student "1" --> "0..*" Ticket : creates
+Ticket "0..*" --> "0..1" User : assignee
+Ticket "1" *-- "0..*" TicketEvent : events
+Ticket "1" *-- "0..*" Attachment : attachments
+TicketEvent "0..*" --> "1" User : actor
+Attachment "0..*" --> "1" User : uploader
+User "1" --> "0..*" Notification : receives
+User "1" --> "0..*" OrchestratorTrace : generates
+User "1" --> "0..*" KnowledgeDocument : uploads
+KnowledgeDocument "1" *-- "0..*" KnowledgeChunk : chunks
+
+Admin ..> ApiKey : creates
+Admin ..> FaqEntry : manages
+Admin ..> KnowledgeDocument : uploads
+Student ..> KnowledgeDocument : searches
+Staff ..> Ticket : handles
+'/
+
+enum Role {
+  STUDENT
+  STAFF
+  ADMIN
+}
+
+enum Department {
+  REGISTRATION
+  IT
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+}
+
+enum NotificationType {
+  TICKET_CREATED
+  TICKET_UPDATED
+  SYSTEM
+}
+
+enum KnowledgeSourceType {
+  FAQ
+  DOCUMENT
+}
+
+together {
+  abstract class User {
+    - id: String
+    - schoolId: String
+    - email: String?
+    - passwordHash: String
+    - role: Role
+    - department: Department?
+    - active: Boolean
+    - createdAt: DateTime
+    - updatedAt: DateTime
+    + login()
+    + viewProfile()
+    + updateProfile()
+  }
+
+  note top of User
+  Conceptual UML based on the Prisma schema and service layer.
+  Student, Staff, and Admin are role-based specializations of User.
+  In the database, they are stored in the same User table.
+  end note
+
+  class Student {
+    - role: Role = STUDENT
+    + register()
+    + createTicket()
+    + viewMyTickets()
+    + updateOwnTicket()
+    + addAttachment()
+    + removeAttachment()
+    + getUnreadNotifications()
+  }
+
+  class Staff {
+    - role: Role = STAFF
+    - department: Department
+    + listQueue()
+    + viewTicket()
+    + claimTicket()
+    + updateTicket()
+    + updateTicketStatus()
+    + addAttachment()
+    + removeAttachment()
+  }
+
+  class Admin {
+    - role: Role = ADMIN
+    - department: Department?
+    + provisionUser()
+    + createApiKey()
+    + viewTraces()
+    + createFaq()
+    + uploadKnowledgeDocument()
+    + listQueue()
+    + claimTicket()
+    + updateTicketStatus()
+  }
+
+  class Profile {
+    - id: String
+    - fullName: String
+    - avatarUrl: String?
+    - userId: String
+    - createdAt: DateTime
+    - updatedAt: DateTime
+    + viewProfile()
+    + updateProfile()
+  }
+}
+
+together {
+  class Ticket {
+    - id: String
+    - studentId: String
+    - department: Department
+    - subject: String
+    - description: String
+    - status: TicketStatus
+    - assigneeId: String?
+    - createdAt: DateTime
+    - updatedAt: DateTime
+    + createTicket()
+    + getTicketById()
+    + updateTicket()
+    + claimTicket()
+    + updateStatus()
+    + addAttachment()
+    + removeAttachment()
+  }
+
+  class TicketEvent {
+    - id: String
+    - ticketId: String
+    - actorId: String
+    - eventType: String
+    - payload: Json?
+    - createdAt: DateTime
+    + logEvent()
+  }
+
+  class Attachment {
+    - id: String
+    - ticketId: String
+    - uploaderId: String
+    - fileName: String
+    - mimeType: String
+    - sizeBytes: Int
+    - storagePath: String
+    - createdAt: DateTime
+    + addAttachment()
+    + removeAttachment()
+    + validateAttachment()
+  }
+
+  class Notification {
+    - id: String
+    - userId: String
+    - type: NotificationType
+    - title: String
+    - message: String
+    - read: Boolean
+    - createdAt: DateTime
+    + createMany()
+    + getUnreadCount()
+  }
+}
+
+together {
+  class KnowledgeDocument {
+    - id: String
+    - title: String
+    - department: Department
+    - sourceType: KnowledgeSourceType
+    - content: String
+    - status: String
+    - uploadedBy: String
+    - createdAt: DateTime
+    - updatedAt: DateTime
+    + createDocument()
+    + search()
+    + retrieveRelevant()
+  }
+
+  class KnowledgeChunk {
+    - id: String
+    - documentId: String
+    - chunkText: String
+    - embedding: Float[]
+    - chunkIndex: Int
+    - createdAt: DateTime
+    + generateEmbedding()
+  }
+
+  class FaqEntry {
+    - id: String
+    - department: Department
+    - question: String
+    - answer: String
+    - tags: String[]
+    - createdAt: DateTime
+    - updatedAt: DateTime
+    + createFaq()
+    + search()
+  }
+}
+
+together {
+  class ApiKey {
+    - id: String
+    - label: String
+    - hashedKey: String
+    - scopes: String[]
+    - rateLimitPolicy: Json?
+    - active: Boolean
+    - createdAt: DateTime
+    - updatedAt: DateTime
+    + createApiKey()
+    + deactivate()
+  }
+
+  class OrchestratorTrace {
+    - id: String
+    - userId: String
+    - intent: String
+    - confidence: Float?
+    - routedAgents: Json
+    - outcome: Json
+    - createdAt: DateTime
+    + recordTrace()
+    + viewTraces()
+  }
+}
+
+User <|-- Student
+User <|-- Staff
+User <|-- Admin
+
+User "1" *-- "0..1" Profile : has
+Student "1" --> "0..*" Ticket : creates
+Ticket "0..*" --> "0..1" User : assignee
+Ticket "1" *-- "0..*" TicketEvent : events
+Ticket "1" *-- "0..*" Attachment : attachments
+TicketEvent "0..*" --> "1" User : actor
+Attachment "0..*" --> "1" User : uploader
+User "1" --> "0..*" Notification : receives
+User "1" --> "0..*" OrchestratorTrace : generates
+User "1" --> "0..*" KnowledgeDocument : uploads
+KnowledgeDocument "1" *-- "0..*" KnowledgeChunk : chunks
+
+Admin ..> ApiKey : creates
+Admin ..> FaqEntry : manages
+Admin ..> KnowledgeDocument : uploads
+Student ..> KnowledgeDocument : searches
+Staff ..> Ticket : handles
+
+@enduml
