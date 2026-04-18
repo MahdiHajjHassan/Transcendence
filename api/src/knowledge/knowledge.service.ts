@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Department, KnowledgeSourceType } from '@prisma/client';
+import { KnowledgeSourceType, SupportArea } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { chunkText, cosineSimilarity } from '../utils/text';
 import { GeminiService } from '../ai/gemini.service';
@@ -24,7 +24,7 @@ export class KnowledgeService {
   async createFaq(dto: CreateFaqDto) {
     return this.prisma.faqEntry.create({
       data: {
-        department: dto.department,
+        supportArea: dto.supportArea,
         question: dto.question,
         answer: dto.answer,
         tags: dto.tags ?? [],
@@ -49,7 +49,7 @@ export class KnowledgeService {
     const document = await this.prisma.knowledgeDocument.create({
       data: {
         title: dto.title,
-        department: dto.department,
+        supportArea: dto.supportArea,
         sourceType: KnowledgeSourceType.DOCUMENT,
         content,
         uploadedBy: uploaderId,
@@ -94,7 +94,7 @@ export class KnowledgeService {
     items: Array<{
       id: string;
       type: 'FAQ' | 'DOCUMENT';
-      department: Department;
+      supportArea: SupportArea;
       title: string;
       excerpt: string;
       createdAt: Date;
@@ -105,7 +105,7 @@ export class KnowledgeService {
     const skip = (page - 1) * limit;
 
     const faqWhere = {
-      ...(query.department ? { department: query.department } : {}),
+      ...(query.supportArea ? { supportArea: query.supportArea } : {}),
       OR: [
         { question: { contains: query.q, mode: 'insensitive' as const } },
         { answer: { contains: query.q, mode: 'insensitive' as const } },
@@ -114,7 +114,7 @@ export class KnowledgeService {
     };
 
     const docWhere = {
-      ...(query.department ? { department: query.department } : {}),
+      ...(query.supportArea ? { supportArea: query.supportArea } : {}),
       OR: [
         { title: { contains: query.q, mode: 'insensitive' as const } },
         { content: { contains: query.q, mode: 'insensitive' as const } },
@@ -141,7 +141,7 @@ export class KnowledgeService {
       ...faqs.map((faq) => ({
         id: faq.id,
         type: 'FAQ' as const,
-        department: faq.department,
+        supportArea: faq.supportArea,
         title: faq.question,
         excerpt: faq.answer.slice(0, 220),
         createdAt: faq.createdAt,
@@ -149,7 +149,7 @@ export class KnowledgeService {
       ...docs.map((doc) => ({
         id: doc.id,
         type: 'DOCUMENT' as const,
-        department: doc.department,
+        supportArea: doc.supportArea,
         title: doc.title,
         excerpt: doc.content.slice(0, 220),
         createdAt: doc.createdAt,
@@ -168,7 +168,7 @@ export class KnowledgeService {
 
   async retrieveRelevant(
     question: string,
-    department: Department | null,
+    supportArea: SupportArea | null,
     topK = 4,
   ): Promise<RetrievedContext[]> {
     const [queryEmbedding, chunks, faqs] = await Promise.all([
@@ -176,7 +176,7 @@ export class KnowledgeService {
       this.prisma.knowledgeChunk.findMany({
         where: {
           document: {
-            ...(department ? { department } : {}),
+            ...(supportArea ? { supportArea } : {}),
             status: 'ACTIVE',
           },
         },
@@ -192,7 +192,7 @@ export class KnowledgeService {
       }),
       this.prisma.faqEntry.findMany({
         where: {
-          ...(department ? { department } : {}),
+          ...(supportArea ? { supportArea } : {}),
         },
         take: 200,
       }),

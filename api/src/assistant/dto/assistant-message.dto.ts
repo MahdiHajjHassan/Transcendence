@@ -5,7 +5,7 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-import { Department } from '../../common/enums';
+import { SupportArea } from '../../common/enums';
 
 export class AssistantMessageDto {
   @IsString()
@@ -13,8 +13,8 @@ export class AssistantMessageDto {
   message!: string;
 
   @IsOptional()
-  @IsEnum(Department)
-  department?: Department;
+  @IsEnum(SupportArea)
+  supportArea?: SupportArea;
 
   @IsOptional()
   @IsString()

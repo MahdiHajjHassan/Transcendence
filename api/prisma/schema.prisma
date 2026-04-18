@@ -13,9 +13,18 @@ enum Role {
   ADMIN
 }
 
-enum Department {
+enum SupportArea {
   REGISTRATION
   IT
+
+  @@map("Department")
+}
+
+enum AcademicDepartment {
+  ENGINEERING
+  BUSINESS
+  LAW
+  MEDICINE
 }
 
 enum TicketStatus {
@@ -41,7 +50,8 @@ model User {
   email           String?            @unique
   passwordHash    String
   role            Role               @default(STUDENT)
-  department      Department?
+  supportArea     SupportArea?       @map("department")
+  academicDepartment AcademicDepartment?
   active          Boolean            @default(true)
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
@@ -69,7 +79,8 @@ model Ticket {
   id          String       @id @default(cuid())
   studentId   String
   student     User         @relation("StudentTickets", fields: [studentId], references: [id], onDelete: Restrict)
-  department  Department
+  supportArea SupportArea  @map("department")
+  academicDepartment AcademicDepartment?
   subject     String
   description String
   status      TicketStatus @default(OPEN)
@@ -80,7 +91,7 @@ model Ticket {
   events      TicketEvent[]
   attachments Attachment[]
 
-  @@index([department, status])
+  @@index([supportArea, academicDepartment, status])
   @@index([studentId, createdAt])
 }
 
@@ -115,7 +126,7 @@ model Attachment {
 model KnowledgeDocument {
   id         String              @id @default(cuid())
   title      String
-  department Department
+  supportArea SupportArea        @map("department")
   sourceType KnowledgeSourceType @default(DOCUMENT)
   content    String
   status     String              @default("ACTIVE")
@@ -125,7 +136,7 @@ model KnowledgeDocument {
   updatedAt  DateTime            @updatedAt
   chunks     KnowledgeChunk[]
 
-  @@index([department, createdAt])
+  @@index([supportArea, createdAt])
 }
 
 model KnowledgeChunk {
@@ -142,14 +153,14 @@ model KnowledgeChunk {
 
 model FaqEntry {
   id         String     @id @default(cuid())
-  department Department
+  supportArea SupportArea @map("department")
   question   String
   answer     String
   tags       String[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 
-  @@index([department, createdAt])
+  @@index([supportArea, createdAt])
 }
 
 model OrchestratorTrace {

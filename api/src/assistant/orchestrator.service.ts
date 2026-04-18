@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AgentIntent, Department } from '../common/enums';
+import { AgentIntent, SupportArea } from '../common/enums';
 
 @Injectable()
 export class OrchestratorService {
@@ -43,7 +43,7 @@ export class OrchestratorService {
     return AgentIntent.KNOWLEDGE;
   }
 
-  detectDepartment(message: string): Department | undefined {
+  detectSupportArea(message: string): SupportArea | undefined {
     const lower = message.toLowerCase();
     if (
       lower.includes('it') ||
@@ -51,7 +51,7 @@ export class OrchestratorService {
       lower.includes('network') ||
       lower.includes('password')
     ) {
-      return Department.IT;
+      return SupportArea.IT;
     }
 
     if (
@@ -60,7 +60,7 @@ export class OrchestratorService {
       lower.includes('document') ||
       lower.includes('paper')
     ) {
-      return Department.REGISTRATION;
+      return SupportArea.REGISTRATION;
     }
 
     return undefined;

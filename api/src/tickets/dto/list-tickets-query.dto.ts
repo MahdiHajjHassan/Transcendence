@@ -1,11 +1,19 @@
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
-import { Department, TicketStatus } from '../../common/enums';
+import {
+  AcademicDepartment,
+  SupportArea,
+  TicketStatus,
+} from '../../common/enums';
 
 export class ListTicketsQueryDto {
   @IsOptional()
-  @IsEnum(Department)
-  department?: Department;
+  @IsEnum(SupportArea)
+  supportArea?: SupportArea;
+
+  @IsOptional()
+  @IsEnum(AcademicDepartment)
+  academicDepartment?: AcademicDepartment;
 
   @IsOptional()
   @IsEnum(TicketStatus)

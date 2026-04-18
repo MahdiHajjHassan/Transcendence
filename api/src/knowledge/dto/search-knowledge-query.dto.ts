@@ -1,14 +1,14 @@
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
-import { Department } from '../../common/enums';
+import { SupportArea } from '../../common/enums';
 
 export class SearchKnowledgeQueryDto {
   @IsString()
   q!: string;
 
   @IsOptional()
-  @IsEnum(Department)
-  department?: Department;
+  @IsEnum(SupportArea)
+  supportArea?: SupportArea;
 
   @IsOptional()
   @Type(() => Number)

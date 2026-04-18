@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Role } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { AgentIntent, Department } from '../common/enums';
+import {
+  AcademicDepartment,
+  AgentIntent,
+  SupportArea,
+} from '../common/enums';
 import { AssistantMessageDto } from './dto/assistant-message.dto';
 import { AssistantResponse } from './types';
 import { KnowledgeAgentService } from './knowledge-agent.service';
@@ -24,11 +28,13 @@ export class AssistantService {
       userId: string;
       schoolId: string;
       role: Role;
-      department: Department | null;
+      supportArea: SupportArea | null;
+      academicDepartment: AcademicDepartment | null;
     },
     dto: AssistantMessageDto,
   ): Promise<AssistantResponse> {
     const intent = this.orchestrator.classifyIntent(dto.message);
+    const canCreateTicket = user.role === Role.STUDENT;
     const routedAgents: string[] = [];
 
     let message = '';
@@ -38,14 +44,14 @@ export class AssistantService {
 
     if (intent === AgentIntent.KNOWLEDGE || intent === AgentIntent.MIXED) {
       routedAgents.push('KnowledgeAgent');
-      const department =
-        dto.department ??
-        user.department ??
-        this.orchestrator.detectDepartment(dto.message) ??
+      const supportArea =
+        dto.supportArea ??
+        user.supportArea ??
+        this.orchestrator.detectSupportArea(dto.message) ??
         null;
       const knowledgeResult = await this.knowledgeAgent.answer(
         dto.message,
-        department,
+        supportArea,
       );
       confidence = knowledgeResult.confidence;
       citations = knowledgeResult.citations;
@@ -54,11 +60,12 @@ export class AssistantService {
         knowledgeResult.missingContext ||
         knowledgeResult.confidence < this.confidenceThreshold
       ) {
-        if (dto.createTicketOnDecline) {
+        if (dto.createTicketOnDecline && canCreateTicket) {
           routedAgents.push('WorkflowAgent');
           const workflowResult = await this.workflowAgent.handle(user, {
             ...dto,
-            department: dto.department ?? department ?? Department.IT,
+            supportArea:
+              dto.supportArea ?? supportArea ?? SupportArea.IT,
             subject: dto.subject ?? 'Escalation from assistant',
             description: dto.description ?? dto.message,
           });
@@ -66,8 +73,9 @@ export class AssistantService {
           message = `I could not answer from trusted sources, so I escalated this to staff. ${workflowResult.message}`;
           ticketId = workflowResult.ticketId;
         } else {
-          message =
-            'I could not find enough trusted context to answer safely. Do you want me to create a support ticket?';
+          message = canCreateTicket
+            ? 'I could not find enough trusted context to answer safely. Do you want me to create a support ticket?'
+            : 'I could not find enough trusted context to answer safely. Staff and admins can still use the assistant, check ticket status, and manage the ticket queue, but only students can submit new tickets.';
         }
       } else {
         message = knowledgeResult.message;
@@ -111,9 +119,9 @@ export class AssistantService {
       message,
       confidence,
       citations,
-      ticketSuggestion: message.includes(
-        'Do you want me to create a support ticket',
-      )
+      ticketSuggestion:
+        canCreateTicket &&
+        message.includes('Do you want me to create a support ticket')
         ? {
             allowed: true,
             reason: 'No trusted context found.',

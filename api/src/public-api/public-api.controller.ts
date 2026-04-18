@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -18,6 +19,7 @@ import { PublicUpdateTicketDto } from './dto/public-update-ticket.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { TicketsService } from '../tickets/tickets.service';
 import { Role } from '@prisma/client';
+import { SupportArea } from '../common/enums';
 
 @Controller('public')
 @UseGuards(ApiKeyGuard)
@@ -44,7 +46,7 @@ export class PublicApiController {
       },
       endpoints: [
         'GET /api/public/docs',
-        'GET /api/public/knowledge/search?q=&department=&page=&limit=',
+        'GET /api/public/knowledge/search?q=&supportArea=&page=&limit=',
         'POST /api/public/tickets',
         'GET /api/public/tickets/:ticketId',
         'PUT /api/public/tickets/:ticketId',
@@ -55,6 +57,11 @@ export class PublicApiController {
 
   @Post('tickets')
   async createTicket(@Body() dto: PublicCreateTicketDto) {
+    const supportArea = this.resolveSupportArea(
+      dto.supportArea,
+      dto.department,
+    );
+
     const student = await this.prisma.user.findUnique({
       where: {
         schoolId: dto.studentSchoolId,
@@ -71,7 +78,7 @@ export class PublicApiController {
     }
 
     return this.ticketsService.createTicket(student.id, {
-      department: dto.department,
+      supportArea,
       subject: dto.subject,
       description: dto.description,
     });
@@ -105,7 +112,17 @@ export class PublicApiController {
       ticketId,
       admin.id,
       Role.ADMIN,
-      dto,
+      null,
+      null,
+      {
+        supportArea: this.resolveSupportArea(
+          dto.supportArea,
+          dto.department,
+          true,
+        ),
+        subject: dto.subject,
+        description: dto.description,
+      },
     );
   }
 
@@ -133,6 +150,33 @@ export class PublicApiController {
       attachmentId,
       admin.id,
       Role.ADMIN,
+      null,
+      null,
     );
+  }
+
+  private resolveSupportArea(
+    supportArea?: SupportArea,
+    department?: SupportArea,
+  ): SupportArea;
+  private resolveSupportArea(
+    supportArea: SupportArea | undefined,
+    department: SupportArea | undefined,
+    allowUndefined: true,
+  ): SupportArea | undefined;
+  private resolveSupportArea(
+    supportArea?: SupportArea,
+    department?: SupportArea,
+    allowUndefined = false,
+  ): SupportArea | undefined {
+    const resolved = supportArea ?? department;
+
+    if (!resolved && !allowUndefined) {
+      throw new BadRequestException(
+        'supportArea is required. The legacy department field is still accepted temporarily.',
+      );
+    }
+
+    return resolved;
   }
 }

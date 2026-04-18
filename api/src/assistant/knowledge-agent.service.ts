@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { KnowledgeService } from '../knowledge/knowledge.service';
 import { GeminiService } from '../ai/gemini.service';
-import { Department } from '../common/enums';
+import { SupportArea } from '../common/enums';
 
 @Injectable()
 export class KnowledgeAgentService {
@@ -12,7 +12,7 @@ export class KnowledgeAgentService {
 
   async answer(
     question: string,
-    department: Department | null,
+    supportArea: SupportArea | null,
   ): Promise<{
     message: string;
     confidence: number;
@@ -21,7 +21,7 @@ export class KnowledgeAgentService {
   }> {
     const contexts = await this.knowledgeService.retrieveRelevant(
       question,
-      department,
+      supportArea,
       4,
     );
 

@@ -1,10 +1,10 @@
 import { IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
-import { Department } from '../../common/enums';
+import { SupportArea } from '../../common/enums';
 
 export class UpdateTicketDto {
   @IsOptional()
-  @IsEnum(Department)
-  department?: Department;
+  @IsEnum(SupportArea)
+  supportArea?: SupportArea;
 
   @IsOptional()
   @IsString()

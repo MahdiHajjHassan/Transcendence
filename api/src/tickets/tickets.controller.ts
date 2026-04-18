@@ -18,20 +18,24 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Roles } from '../common/decorators/roles.decorator';
-import { Department, Role } from '../common/enums';
+import {
+  AcademicDepartment,
+  Role,
+  SupportArea,
+} from '../common/enums';
 import { CreateTicketDto } from './dto/create-ticket.dto';
+import { CreateTicketMessageDto } from './dto/create-ticket-message.dto';
 import { ListTicketsQueryDto } from './dto/list-tickets-query.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { UpdateTicketStatusDto } from './dto/update-ticket-status.dto';
 
 @Controller('tickets')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
   @Post()
-  @Roles(Role.STUDENT, Role.STAFF, Role.ADMIN)
-  @UseGuards(RolesGuard)
+  @Roles(Role.STUDENT)
   createTicket(
     @CurrentUser('userId') userId: string,
     @Body() dto: CreateTicketDto,
@@ -40,6 +44,7 @@ export class TicketsController {
   }
 
   @Get('my')
+  @Roles(Role.STUDENT)
   listMy(
     @CurrentUser('userId') userId: string,
     @Query() query: ListTicketsQueryDto,
@@ -49,20 +54,39 @@ export class TicketsController {
 
   @Get('queue')
   @Roles(Role.STAFF, Role.ADMIN)
-  @UseGuards(RolesGuard)
   listQueue(
-    @CurrentUser('department') department: Department | null,
+    @CurrentUser('userId') userId: string,
+    @CurrentUser('supportArea') supportArea: SupportArea | null,
+    @CurrentUser('academicDepartment')
+    academicDepartment: AcademicDepartment | null,
     @CurrentUser('role') role: Role,
     @Query() query: ListTicketsQueryDto,
   ) {
-    const scopedDepartment =
-      role === Role.ADMIN ? (query.department ?? null) : department;
-    return this.ticketsService.listQueue(query, scopedDepartment);
+    return this.ticketsService.listQueue(
+      query,
+      userId,
+      role,
+      supportArea,
+      academicDepartment,
+    );
   }
 
   @Get(':id')
-  getById(@Param('id') id: string) {
-    return this.ticketsService.getTicketById(id);
+  getById(
+    @Param('id') id: string,
+    @CurrentUser('userId') userId: string,
+    @CurrentUser('role') role: Role,
+    @CurrentUser('supportArea') supportArea: SupportArea | null,
+    @CurrentUser('academicDepartment')
+    academicDepartment: AcademicDepartment | null,
+  ) {
+    return this.ticketsService.getAccessibleTicketById(
+      id,
+      userId,
+      role,
+      supportArea,
+      academicDepartment,
+    );
   }
 
   @Put(':id')
@@ -70,27 +94,79 @@ export class TicketsController {
     @Param('id') id: string,
     @CurrentUser('userId') userId: string,
     @CurrentUser('role') role: Role,
+    @CurrentUser('supportArea') supportArea: SupportArea | null,
+    @CurrentUser('academicDepartment')
+    academicDepartment: AcademicDepartment | null,
     @Body() dto: UpdateTicketDto,
   ) {
-    return this.ticketsService.updateTicket(id, userId, role, dto);
+    return this.ticketsService.updateTicket(
+      id,
+      userId,
+      role,
+      supportArea,
+      academicDepartment,
+      dto,
+    );
   }
 
   @Post(':id/claim')
   @Roles(Role.STAFF, Role.ADMIN)
-  @UseGuards(RolesGuard)
-  claim(@Param('id') id: string, @CurrentUser('userId') staffId: string) {
-    return this.ticketsService.claim(id, staffId);
+  claim(
+    @Param('id') id: string,
+    @CurrentUser('userId') staffId: string,
+    @CurrentUser('role') role: Role,
+    @CurrentUser('supportArea') supportArea: SupportArea | null,
+    @CurrentUser('academicDepartment')
+    academicDepartment: AcademicDepartment | null,
+  ) {
+    return this.ticketsService.claim(
+      id,
+      staffId,
+      role,
+      supportArea,
+      academicDepartment,
+    );
   }
 
   @Patch(':id/status')
   @Roles(Role.STAFF, Role.ADMIN)
-  @UseGuards(RolesGuard)
   updateStatus(
     @Param('id') id: string,
     @CurrentUser('userId') actorId: string,
+    @CurrentUser('role') role: Role,
+    @CurrentUser('supportArea') supportArea: SupportArea | null,
+    @CurrentUser('academicDepartment')
+    academicDepartment: AcademicDepartment | null,
     @Body() dto: UpdateTicketStatusDto,
   ) {
-    return this.ticketsService.updateStatus(id, actorId, dto);
+    return this.ticketsService.updateStatus(
+      id,
+      actorId,
+      role,
+      supportArea,
+      academicDepartment,
+      dto,
+    );
+  }
+
+  @Post(':id/messages')
+  createMessage(
+    @Param('id') id: string,
+    @CurrentUser('userId') actorId: string,
+    @CurrentUser('role') role: Role,
+    @CurrentUser('supportArea') supportArea: SupportArea | null,
+    @CurrentUser('academicDepartment')
+    academicDepartment: AcademicDepartment | null,
+    @Body() dto: CreateTicketMessageDto,
+  ) {
+    return this.ticketsService.createMessage(
+      id,
+      actorId,
+      role,
+      supportArea,
+      academicDepartment,
+      dto,
+    );
   }
 
   @Post(':id/attachments')
@@ -98,9 +174,20 @@ export class TicketsController {
   addAttachment(
     @Param('id') id: string,
     @CurrentUser('userId') userId: string,
+    @CurrentUser('role') role: Role,
+    @CurrentUser('supportArea') supportArea: SupportArea | null,
+    @CurrentUser('academicDepartment')
+    academicDepartment: AcademicDepartment | null,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.ticketsService.addAttachment(id, userId, file);
+    return this.ticketsService.addAttachment(
+      id,
+      userId,
+      role,
+      supportArea,
+      academicDepartment,
+      file,
+    );
   }
 
   @Delete(':id/attachments/:attachmentId')
@@ -109,12 +196,17 @@ export class TicketsController {
     @Param('attachmentId') attachmentId: string,
     @CurrentUser('userId') actorId: string,
     @CurrentUser('role') role: Role,
+    @CurrentUser('supportArea') supportArea: SupportArea | null,
+    @CurrentUser('academicDepartment')
+    academicDepartment: AcademicDepartment | null,
   ) {
     return this.ticketsService.removeAttachment(
       id,
       attachmentId,
       actorId,
       role,
+      supportArea,
+      academicDepartment,
     );
   }
 }

@@ -1,11 +1,19 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as argon2 from 'argon2';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterStudentDto } from './dto/register-student.dto';
-import { Department, Role } from '../common/enums';
+import {
+  AcademicDepartment,
+  Role,
+  SupportArea,
+} from '../common/enums';
 import { ProvisionUserDto } from './dto/provision-user.dto';
 
 @Injectable()
@@ -36,6 +44,8 @@ export class AuthService {
         schoolId: dto.schoolId,
         passwordHash,
         role: Role.STUDENT,
+        supportArea: null,
+        academicDepartment: dto.academicDepartment,
         profile: {
           create: {
             fullName: dto.fullName,
@@ -44,12 +54,33 @@ export class AuthService {
       },
     });
 
-    return this.signToken(user.id, user.schoolId, Role.STUDENT, null);
+    return this.signToken(
+      user.id,
+      user.schoolId,
+      Role.STUDENT,
+      null,
+      user.academicDepartment,
+    );
   }
 
   async provisionUser(
     dto: ProvisionUserDto,
   ): Promise<{ id: string; schoolId: string }> {
+    if (dto.role === Role.STUDENT) {
+      throw new BadRequestException(
+        'Use student registration instead of admin provisioning for students.',
+      );
+    }
+
+    if (
+      dto.role === Role.STAFF &&
+      (!dto.supportArea || !dto.academicDepartment)
+    ) {
+      throw new BadRequestException(
+        'Staff accounts require both a support area and an academic department.',
+      );
+    }
+
     const passwordHash = await argon2.hash(dto.password, {
       type: argon2.argon2id,
     });
@@ -60,7 +91,9 @@ export class AuthService {
         email: dto.email,
         passwordHash,
         role: dto.role,
-        department: dto.department,
+        supportArea: dto.role === Role.STAFF ? dto.supportArea ?? null : null,
+        academicDepartment:
+          dto.role === Role.STAFF ? dto.academicDepartment ?? null : null,
         profile: {
           create: {
             fullName: dto.fullName,
@@ -94,7 +127,8 @@ export class AuthService {
       user.id,
       user.schoolId,
       user.role,
-      user.department ?? null,
+      user.supportArea ?? null,
+      user.academicDepartment ?? null,
     );
   }
 
@@ -102,7 +136,8 @@ export class AuthService {
     userId: string,
     schoolId: string,
     role: Role,
-    department: Department | null,
+    supportArea: SupportArea | null,
+    academicDepartment: AcademicDepartment | null,
   ): Promise<{ accessToken: string }> {
     const secret = this.configService.get<string>('JWT_SECRET');
     const expiresIn = Number(
@@ -114,7 +149,8 @@ export class AuthService {
         sub: userId,
         schoolId,
         role,
-        department,
+        supportArea,
+        academicDepartment,
       },
       {
         secret,

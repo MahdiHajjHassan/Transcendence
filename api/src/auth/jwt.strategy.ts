@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Department, Role } from '../common/enums';
+import {
+  AcademicDepartment,
+  Role,
+  SupportArea,
+} from '../common/enums';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -18,18 +22,22 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     sub: string;
     schoolId: string;
     role: Role;
-    department?: Department | null;
+    supportArea?: SupportArea | null;
+    department?: SupportArea | null;
+    academicDepartment?: AcademicDepartment | null;
   }): {
     userId: string;
     schoolId: string;
     role: Role;
-    department: Department | null;
+    supportArea: SupportArea | null;
+    academicDepartment: AcademicDepartment | null;
   } {
     return {
       userId: payload.sub,
       schoolId: payload.schoolId,
       role: payload.role,
-      department: payload.department ?? null,
+      supportArea: payload.supportArea ?? payload.department ?? null,
+      academicDepartment: payload.academicDepartment ?? null,
     };
   }
 }

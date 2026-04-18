@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { AcademicDepartment, SupportArea } from '../common/enums';
 
 @Injectable()
 export class UsersService {
@@ -11,7 +12,8 @@ export class UsersService {
     schoolId: string;
     email: string | null;
     role: string;
-    department: string | null;
+    supportArea: SupportArea | null;
+    academicDepartment: AcademicDepartment | null;
     profile: { fullName: string; avatarUrl: string | null } | null;
   }> {
     const user = await this.prisma.user.findUnique({
@@ -21,7 +23,8 @@ export class UsersService {
         schoolId: true,
         email: true,
         role: true,
-        department: true,
+        supportArea: true,
+        academicDepartment: true,
         profile: {
           select: {
             fullName: true,

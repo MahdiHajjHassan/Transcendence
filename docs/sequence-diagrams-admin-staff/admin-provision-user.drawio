@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-04-04T00:00:00.000Z" agent="Codex" version="24.7.17" editor="www.draw.io" compressed="false">
+  <diagram id="page-1" name="Sequence Diagram - Admin Provisions a User">
+    <mxGraphModel dx="1400" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+    <mxCell id="title" value="Sequence Diagram - Admin Provisions a User" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=18;fontColor=#111827;" vertex="1" parent="1">
+      <mxGeometry x="360" y="10" width="560" height="24" as="geometry" />
+    </mxCell>
+    <mxCell id="admin-head" value="Admin" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="50" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="admin-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="110" y="92" as="sourcePoint" />
+        <mxPoint x="110" y="680" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="web-head" value="Web App" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="300" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="web-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="360" y="92" as="sourcePoint" />
+        <mxPoint x="360" y="680" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="auth-head" value="Auth API" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="590" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="auth-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="650" y="92" as="sourcePoint" />
+        <mxPoint x="650" y="680" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="db-head" value="Database" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="920" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="db-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="980" y="92" as="sourcePoint" />
+        <mxPoint x="980" y="680" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="auth-act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#475569;" vertex="1" parent="1">
+      <mxGeometry x="644" y="180" width="12" height="220" as="geometry" />
+    </mxCell>
+    <mxCell id="db-act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#475569;" vertex="1" parent="1">
+      <mxGeometry x="974" y="230" width="12" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="m1" value="1. Fill staff/admin form" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="110" y="150" as="sourcePoint" />
+        <mxPoint x="360" y="150" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m2" value="2. POST /auth/admin/provision" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="360" y="190" as="sourcePoint" />
+        <mxPoint x="650" y="190" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m3" value="3. Hash password + prepare user" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="650" y="230" as="sourcePoint" />
+        <mxPoint x="650" y="230" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m4" value="4. Create User + Profile" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="650" y="270" as="sourcePoint" />
+        <mxPoint x="980" y="270" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m5" value="5. id + schoolId" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;dashed=1;dashPattern=4 4;endArrow=block;endFill=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="980" y="310" as="sourcePoint" />
+        <mxPoint x="650" y="310" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m6" value="6. Provision result" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;dashed=1;dashPattern=4 4;endArrow=block;endFill=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="650" y="350" as="sourcePoint" />
+        <mxPoint x="360" y="350" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m7" value="7. Show created account" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;dashed=1;dashPattern=4 4;endArrow=block;endFill=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="360" y="390" as="sourcePoint" />
+        <mxPoint x="110" y="390" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="n1" value="Only ADMIN can call this endpoint. The created user can be STAFF or ADMIN." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="700" y="450" width="310" height="70" as="geometry" />
+    </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

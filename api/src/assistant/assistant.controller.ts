@@ -5,7 +5,7 @@ import { AssistantMessageDto } from './dto/assistant-message.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Role } from '@prisma/client';
-import { Department } from '../common/enums';
+import { AcademicDepartment, SupportArea } from '../common/enums';
 
 @Controller('assistant')
 @UseGuards(JwtAuthGuard)
@@ -20,7 +20,8 @@ export class AssistantController {
       userId: string;
       schoolId: string;
       role: Role;
-      department: Department | null;
+      supportArea: SupportArea | null;
+      academicDepartment: AcademicDepartment | null;
     },
     @Body() dto: AssistantMessageDto,
   ) {

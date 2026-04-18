@@ -6,7 +6,11 @@ import {
   Matches,
   MinLength,
 } from 'class-validator';
-import { Department, Role } from '../../common/enums';
+import {
+  AcademicDepartment,
+  Role,
+  SupportArea,
+} from '../../common/enums';
 
 export class ProvisionUserDto {
   @Matches(/^\d{8}$/, { message: 'schoolId must contain exactly 8 digits.' })
@@ -23,8 +27,12 @@ export class ProvisionUserDto {
   role!: Role;
 
   @IsOptional()
-  @IsEnum(Department)
-  department?: Department;
+  @IsEnum(SupportArea)
+  supportArea?: SupportArea | null;
+
+  @IsOptional()
+  @IsEnum(AcademicDepartment)
+  academicDepartment?: AcademicDepartment | null;
 
   @IsOptional()
   @IsEmail()

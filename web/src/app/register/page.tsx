@@ -5,12 +5,18 @@ import { useRouter } from 'next/navigation';
 import { AppHeader } from '@/components/AppHeader';
 import { apiRequest } from '@/lib/api';
 import { saveToken } from '@/lib/auth';
+import {
+  academicDepartmentOptions,
+  AcademicDepartment,
+} from '@/lib/routing';
 
 export default function RegisterPage() {
   const router = useRouter();
   const [schoolId, setSchoolId] = useState('');
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
+  const [academicDepartment, setAcademicDepartment] =
+    useState<AcademicDepartment>('ENGINEERING');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +28,12 @@ export default function RegisterPage() {
     try {
       const response = await apiRequest<{ accessToken: string }>('/auth/register-student', {
         method: 'POST',
-        body: JSON.stringify({ schoolId, password, fullName }),
+        body: JSON.stringify({
+          schoolId,
+          password,
+          fullName,
+          academicDepartment,
+        }),
       });
       saveToken(response.accessToken);
       router.push('/dashboard');
@@ -53,6 +64,21 @@ export default function RegisterPage() {
                 maxLength={8}
                 required
               />
+            </label>
+            <label className="stack">
+              Academic department
+              <select
+                value={academicDepartment}
+                onChange={(event) =>
+                  setAcademicDepartment(event.target.value as AcademicDepartment)
+                }
+              >
+                {academicDepartmentOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </label>
             <label className="stack">
               Password

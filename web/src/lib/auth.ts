@@ -1,8 +1,14 @@
+import type {
+  AcademicDepartment,
+  SupportArea,
+} from './routing';
+
 export type AuthPayload = {
   sub: string;
   schoolId: string;
   role: 'STUDENT' | 'STAFF' | 'ADMIN';
-  department: 'REGISTRATION' | 'IT' | null;
+  supportArea: SupportArea | null;
+  academicDepartment: AcademicDepartment | null;
   exp: number;
 };
 

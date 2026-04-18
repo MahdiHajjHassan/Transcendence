@@ -147,7 +147,8 @@ Total target: **17 points**.
 - `POST /api/auth/admin/provision` (admin)
 - `GET /api/me`
 - `POST /api/assistant/message`
-- `GET /api/tickets/my`
+- `POST /api/tickets` (student)
+- `GET /api/tickets/my` (student)
 - `GET /api/tickets/queue` (staff/admin)
 - `POST /api/tickets/:id/claim` (staff/admin)
 - `PATCH /api/tickets/:id/status` (staff/admin)

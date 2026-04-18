@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const { PrismaClient, Role, Department } = require('@prisma/client');
+const { PrismaClient, Role, TicketStatus } = require('@prisma/client');
 const argon2 = require('argon2');
 
 async function seedAdmin() {
@@ -18,27 +18,92 @@ async function seedAdmin() {
 
     if (existing) {
       console.log(`[seed] Admin ${schoolId} already exists.`);
-      return;
+    } else {
+      const passwordHash = await argon2.hash(password, { type: argon2.argon2id });
+
+      await prisma.user.create({
+        data: {
+          schoolId,
+          email,
+          passwordHash,
+          role: Role.ADMIN,
+          supportArea: null,
+          academicDepartment: null,
+          profile: {
+            create: {
+              fullName,
+            },
+          },
+        },
+      });
+
+      console.log(`[seed] Admin created. schoolId=${schoolId}`);
     }
 
-    const passwordHash = await argon2.hash(password, { type: argon2.argon2id });
-
-    await prisma.user.create({
+    await prisma.user.updateMany({
+      where: { role: Role.ADMIN },
       data: {
-        schoolId,
-        email,
-        passwordHash,
-        role: Role.ADMIN,
-        department: Department.REGISTRATION,
-        profile: {
-          create: {
-            fullName,
+        supportArea: null,
+        academicDepartment: null,
+      },
+    });
+
+    const ticketsToBackfill = await prisma.ticket.findMany({
+      where: {
+        academicDepartment: null,
+      },
+      select: {
+        id: true,
+        student: {
+          select: {
+            academicDepartment: true,
           },
         },
       },
     });
 
-    console.log(`[seed] Admin created. schoolId=${schoolId}`);
+    for (const ticket of ticketsToBackfill) {
+      if (!ticket.student.academicDepartment) {
+        continue;
+      }
+
+      await prisma.ticket.update({
+        where: {
+          id: ticket.id,
+        },
+        data: {
+          academicDepartment: ticket.student.academicDepartment,
+        },
+      });
+    }
+
+    const studentsToSync = await prisma.user.findMany({
+      where: {
+        role: Role.STUDENT,
+        academicDepartment: {
+          not: null,
+        },
+      },
+      select: {
+        id: true,
+        academicDepartment: true,
+      },
+    });
+
+    for (const student of studentsToSync) {
+      await prisma.ticket.updateMany({
+        where: {
+          studentId: student.id,
+          academicDepartment: null,
+          status: {
+            not: TicketStatus.RESOLVED,
+          },
+        },
+        data: {
+          academicDepartment: student.academicDepartment,
+        },
+      });
+    }
   } finally {
     await prisma.$disconnect();
   }

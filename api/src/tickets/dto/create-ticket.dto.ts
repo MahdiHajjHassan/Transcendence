@@ -1,9 +1,9 @@
 import { IsEnum, IsString, MinLength } from 'class-validator';
-import { Department } from '../../common/enums';
+import { SupportArea } from '../../common/enums';
 
 export class CreateTicketDto {
-  @IsEnum(Department)
-  department!: Department;
+  @IsEnum(SupportArea)
+  supportArea!: SupportArea;
 
   @IsString()
   @MinLength(3)

@@ -1,4 +1,8 @@
-import { AgentIntent, Department } from '../common/enums';
+import {
+  AcademicDepartment,
+  AgentIntent,
+  SupportArea,
+} from '../common/enums';
 
 export type Citation = {
   sourceId: string;
@@ -22,5 +26,6 @@ export type AssistantUser = {
   userId: string;
   schoolId: string;
   role: string;
-  department: Department | null;
+  supportArea: SupportArea | null;
+  academicDepartment: AcademicDepartment | null;
 };
