@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-04-04T00:00:00.000Z" agent="Codex" version="24.7.17" editor="www.draw.io" compressed="false">
+  <diagram id="class-diagram-page" name="Class Diagram">
+    <mxGraphModel dx="1720" dy="1250" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1250" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+    <mxCell id="profile" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;Profile&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- fullName: String&lt;br/&gt;- avatarUrl: String?&lt;br/&gt;- userId: String&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;- updatedAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ viewProfile()&lt;br/&gt;+ updateProfile()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFFFF;strokeColor=#1D4ED8;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="40" y="40" width="280" height="190" as="geometry" />
+    </mxCell>
+    <mxCell id="user" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;User&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- schoolId: String&lt;br/&gt;- email: String?&lt;br/&gt;- passwordHash: String&lt;br/&gt;- role: Role&lt;br/&gt;- department: Department?&lt;br/&gt;- active: Boolean&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;- updatedAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ login()&lt;br/&gt;+ viewProfile()&lt;br/&gt;+ updateProfile()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#EFF6FF;strokeColor=#1D4ED8;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="390" y="40" width="300" height="270" as="geometry" />
+    </mxCell>
+    <mxCell id="notification" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;Notification&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- userId: String&lt;br/&gt;- type: NotificationType&lt;br/&gt;- title: String&lt;br/&gt;- message: String&lt;br/&gt;- read: Boolean&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ createMany()&lt;br/&gt;+ getUnreadCount()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFFFF;strokeColor=#1D4ED8;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="760" y="40" width="280" height="190" as="geometry" />
+    </mxCell>
+    <mxCell id="trace" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;OrchestratorTrace&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- userId: String&lt;br/&gt;- intent: String&lt;br/&gt;- confidence: Float?&lt;br/&gt;- routedAgents: Json&lt;br/&gt;- outcome: Json&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ recordTrace()&lt;br/&gt;+ viewTraces()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFFFF;strokeColor=#1D4ED8;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1110" y="40" width="320" height="220" as="geometry" />
+    </mxCell>
+    <mxCell id="student" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;Student&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- role: Role = STUDENT&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ register()&lt;br/&gt;+ createTicket()&lt;br/&gt;+ viewMyTickets()&lt;br/&gt;+ updateOwnTicket()&lt;br/&gt;+ addAttachment()&lt;br/&gt;+ removeAttachment()&lt;br/&gt;+ getUnreadNotifications()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="40" y="330" width="280" height="220" as="geometry" />
+    </mxCell>
+    <mxCell id="staff" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;Staff&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- role: Role = STAFF&lt;br/&gt;- department: Department&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ listQueue()&lt;br/&gt;+ viewTicket()&lt;br/&gt;+ claimTicket()&lt;br/&gt;+ updateTicket()&lt;br/&gt;+ updateTicketStatus()&lt;br/&gt;+ addAttachment()&lt;br/&gt;+ removeAttachment()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="390" y="330" width="300" height="220" as="geometry" />
+    </mxCell>
+    <mxCell id="admin" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;Admin&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- role: Role = ADMIN&lt;br/&gt;- department: Department?&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ provisionUser()&lt;br/&gt;+ createApiKey()&lt;br/&gt;+ viewTraces()&lt;br/&gt;+ createFaq()&lt;br/&gt;+ uploadKnowledgeDocument()&lt;br/&gt;+ listQueue()&lt;br/&gt;+ claimTicket()&lt;br/&gt;+ updateTicketStatus()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="760" y="330" width="280" height="240" as="geometry" />
+    </mxCell>
+    <mxCell id="apikey" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;ApiKey&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- label: String&lt;br/&gt;- hashedKey: String&lt;br/&gt;- scopes: String[]&lt;br/&gt;- rateLimitPolicy: Json?&lt;br/&gt;- active: Boolean&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;- updatedAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ createApiKey()&lt;br/&gt;+ deactivate()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFBEB;strokeColor=#D97706;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1110" y="330" width="320" height="200" as="geometry" />
+    </mxCell>
+    <mxCell id="knowledgeDocument" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;KnowledgeDocument&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- title: String&lt;br/&gt;- department: Department&lt;br/&gt;- sourceType: KnowledgeSourceType&lt;br/&gt;- content: String&lt;br/&gt;- status: String&lt;br/&gt;- uploadedBy: String&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;- updatedAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ createDocument()&lt;br/&gt;+ search()&lt;br/&gt;+ retrieveRelevant()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#ECFDF5;strokeColor=#059669;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="40" y="640" width="320" height="240" as="geometry" />
+    </mxCell>
+    <mxCell id="ticket" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;Ticket&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- studentId: String&lt;br/&gt;- department: Department&lt;br/&gt;- subject: String&lt;br/&gt;- description: String&lt;br/&gt;- status: TicketStatus&lt;br/&gt;- assigneeId: String?&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;- updatedAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ createTicket()&lt;br/&gt;+ getTicketById()&lt;br/&gt;+ updateTicket()&lt;br/&gt;+ claimTicket()&lt;br/&gt;+ updateStatus()&lt;br/&gt;+ addAttachment()&lt;br/&gt;+ removeAttachment()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFFFF;strokeColor=#1D4ED8;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="430" y="640" width="320" height="250" as="geometry" />
+    </mxCell>
+    <mxCell id="attachment" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;Attachment&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- ticketId: String&lt;br/&gt;- uploaderId: String&lt;br/&gt;- fileName: String&lt;br/&gt;- mimeType: String&lt;br/&gt;- sizeBytes: Int&lt;br/&gt;- storagePath: String&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ addAttachment()&lt;br/&gt;+ removeAttachment()&lt;br/&gt;+ validateAttachment()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFFFF;strokeColor=#64748B;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="820" y="640" width="280" height="220" as="geometry" />
+    </mxCell>
+    <mxCell id="ticketEvent" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;TicketEvent&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- ticketId: String&lt;br/&gt;- actorId: String&lt;br/&gt;- eventType: String&lt;br/&gt;- payload: Json?&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ logEvent()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#FFFFFF;strokeColor=#64748B;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1170" y="640" width="260" height="200" as="geometry" />
+    </mxCell>
+    <mxCell id="knowledgeChunk" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;KnowledgeChunk&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- documentId: String&lt;br/&gt;- chunkText: String&lt;br/&gt;- embedding: Float[]&lt;br/&gt;- chunkIndex: Int&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ generateEmbedding()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#F0FDF4;strokeColor=#059669;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="40" y="960" width="320" height="200" as="geometry" />
+    </mxCell>
+    <mxCell id="faq" value="&lt;div style=&quot;text-align:center;font-size:14px;font-weight:700;&quot;&gt;FaqEntry&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;- id: String&lt;br/&gt;- department: Department&lt;br/&gt;- question: String&lt;br/&gt;- answer: String&lt;br/&gt;- tags: String[]&lt;br/&gt;- createdAt: DateTime&lt;br/&gt;- updatedAt: DateTime&lt;br/&gt;&lt;/div&gt;&lt;hr/&gt;&lt;div style=&quot;line-height:1.45;&quot;&gt;+ createFaq()&lt;br/&gt;+ search()&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;spacingRight=10;spacingBottom=8;fillColor=#F0FDF4;strokeColor=#059669;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="430" y="960" width="320" height="190" as="geometry" />
+    </mxCell>
+    <mxCell id="note1" value="Student, Staff, and Admin are role-based specializations of User.&lt;br/&gt;In the real schema they are stored in the same User table." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="780" y="930" width="310" height="120" as="geometry" />
+    </mxCell>
+        
+    <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=block;endFill=0;endSize=18;" edge="1" parent="1" source="student" target="user">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=block;endFill=0;endSize=18;" edge="1" parent="1" source="staff" target="user">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=block;endFill=0;endSize=18;" edge="1" parent="1" source="admin" target="user">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e4" value="1 has 0..1 profile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="user" target="profile">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e5" value="1 receives 0..* notifications" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="user" target="notification">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e6" value="1 generates 0..* traces" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="user" target="trace">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e7" value="1 creates 0..* tickets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="student" target="ticket">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e8" value="handles / assigned tickets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="staff" target="ticket">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e9" value="1 has 0..* attachments" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="ticket" target="attachment">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e10" value="1 logs 0..* events" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="ticket" target="ticketEvent">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e11" value="uploaded by user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="attachment" target="user">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e12" value="actor user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="ticketEvent" target="user">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e13" value="creates API keys" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="admin" target="apikey">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e14" value="uploads / manages" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="admin" target="knowledgeDocument">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e15" value="uploads documents" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="user" target="knowledgeDocument">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e16" value="1 split into 0..* chunks" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="knowledgeDocument" target="knowledgeChunk">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e17" value="searches" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="student" target="knowledgeDocument">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e18" value="manages FAQs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;endArrow=classic;endFill=1;" edge="1" parent="1" source="admin" target="faq">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

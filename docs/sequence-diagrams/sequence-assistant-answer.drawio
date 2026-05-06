@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-04-04T00:00:00.000Z" agent="Codex" version="24.7.17" editor="www.draw.io" compressed="false">
+  <diagram id="page-1" name="Sequence Diagram - Assistant Answers a Question">
+    <mxGraphModel dx="1400" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="840" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+    <mxCell id="title" value="Sequence Diagram - Assistant Answers a Question" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=18;fontColor=#111827;" vertex="1" parent="1">
+      <mxGeometry x="360" y="10" width="520" height="24" as="geometry" />
+    </mxCell>
+    <mxCell id="student-head" value="Student" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="20" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="student-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="80" y="92" as="sourcePoint" />
+        <mxPoint x="80" y="760" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="web-head" value="Web App" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="200" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="web-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="260" y="92" as="sourcePoint" />
+        <mxPoint x="260" y="760" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="api-head" value="Assistant API" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="410" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="api-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="470" y="92" as="sourcePoint" />
+        <mxPoint x="470" y="760" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="orchestrator-head" value="Orchestrator" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="620" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="orchestrator-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="680" y="92" as="sourcePoint" />
+        <mxPoint x="680" y="760" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="knowledge-head" value="Knowledge Agent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="850" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="knowledge-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="910" y="92" as="sourcePoint" />
+        <mxPoint x="910" y="760" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="db-head" value="Database" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;fontColor=#111827;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="1080" y="50" width="120" height="42" as="geometry" />
+    </mxCell>
+    <mxCell id="db-lifeline" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#94A3B8;dashed=1;dashPattern=4 4;endArrow=none;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="1140" y="92" as="sourcePoint" />
+        <mxPoint x="1140" y="760" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="api-act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#475569;" vertex="1" parent="1">
+      <mxGeometry x="464" y="180" width="12" height="360" as="geometry" />
+    </mxCell>
+    <mxCell id="orch-act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#475569;" vertex="1" parent="1">
+      <mxGeometry x="674" y="220" width="12" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="know-act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#475569;" vertex="1" parent="1">
+      <mxGeometry x="904" y="300" width="12" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="db-act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#475569;" vertex="1" parent="1">
+      <mxGeometry x="1134" y="340" width="12" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="m1" value="1. Ask question" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="80" y="150" as="sourcePoint" />
+        <mxPoint x="260" y="150" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m2" value="2. POST /assistant/message" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="260" y="190" as="sourcePoint" />
+        <mxPoint x="470" y="190" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m3" value="3. classifyIntent()" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="470" y="230" as="sourcePoint" />
+        <mxPoint x="680" y="230" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m4" value="4. KNOWLEDGE / department" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;dashed=1;dashPattern=4 4;endArrow=block;endFill=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="680" y="270" as="sourcePoint" />
+        <mxPoint x="470" y="270" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m5" value="5. answer(question, department)" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="470" y="310" as="sourcePoint" />
+        <mxPoint x="910" y="310" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m6" value="6. retrieveRelevant()" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="910" y="350" as="sourcePoint" />
+        <mxPoint x="1140" y="350" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m7" value="7. FAQ/docs/chunks" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;dashed=1;dashPattern=4 4;endArrow=block;endFill=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="1140" y="390" as="sourcePoint" />
+        <mxPoint x="910" y="390" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m8" value="8. grounded answer + confidence" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;dashed=1;dashPattern=4 4;endArrow=block;endFill=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="910" y="430" as="sourcePoint" />
+        <mxPoint x="470" y="430" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m9" value="9. JSON response" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;dashed=1;dashPattern=4 4;endArrow=block;endFill=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="470" y="490" as="sourcePoint" />
+        <mxPoint x="260" y="490" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="m10" value="10. Show final answer" style="edgeStyle=none;rounded=0;html=1;strokeColor=#111827;dashed=1;dashPattern=4 4;endArrow=block;endFill=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="260" y="530" as="sourcePoint" />
+        <mxPoint x="80" y="530" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="n1" value="This diagram is for the successful knowledge-answer path only." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#111827;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="760" y="580" width="320" height="60" as="geometry" />
+    </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,28 @@
+# root
+.env
+.env.local
+.DS_Store
+.tools
+.tools/
+
+# node
+node_modules
+**/node_modules
+
+# build
+**/.next
+**/dist
+coverage
+
+# prisma/generated
+**/prisma/dev.db*
+
+# uploads
+uploads
+**/uploads
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
